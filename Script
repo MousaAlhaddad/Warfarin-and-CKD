@@ -1,0 +1,64 @@
+# Load the needed packages 
+import numpy as np
+import pandas as pd 
+import matplotlib.pyplot as plt
+import seaborn as sb
+
+def demographics(DF,Order):
+        DF=DF.fillna("No Value")
+        L=[["Characteristic",'Value','n(%)']]
+        for x in DF.columns:
+            print(x)
+            if df.loc[:,x].dtypes == 'int64' or df.loc[:,x].dtypes == 'float64': 
+                L.append([x,"Mean ± SD",
+                          "{}±{}".format(round(df[x].mean(),2),round(df[x].std(),2))])
+            else:
+                if x in Order: 
+                    for y in Order[x]:
+                        L.append([x,y,str(DF[x].value_counts().loc[y])+" ("+
+                                  str(round((DF[x].value_counts().loc[y])/(len(DF))*100,2))+"%)"])
+                if df.loc[:,x].dtypes == bool:
+                        for y in [True,False]:
+                                L.append([x,y,str(DF[x].value_counts().loc[y])+" ("+
+                                          str(round((DF[x].value_counts().loc[y])/(len(DF))*100,2))+"%)"])
+                for y in DF[x].unique():
+                                L.append([x,y,str(DF[x].value_counts().loc[y])+" ("+
+                                              str(round((DF[x].value_counts().loc[y])/(len(DF))*100,2))+"%)"])
+        Demographics = pd.DataFrame(L,columns=["Table 1","Patients' Demographics","n = "+str(len(DF))])
+        Demographics.drop_duplicates(inplace=True)
+        Demographics.iloc[:,0] = [x.replace("_"," ") for x in Demographics.iloc[:,0]]
+        Demographics=Demographics.set_index(["Table 1","Patients' Demographics"])
+        return (Demographics)
+        
+df = pd.read_excel('Master.xlsx')
+df['INR_Level_3'] = df['INR_Level_3'].replace('1,7',1.7)
+df['INR_Level_3'] = [float(x) if type(x)==str else x for x in df['INR_Level_3']]
+df = df.rename(columns = {'Warfarin_dose_2.1':'Warfarin_dose_3','Hieght':'Height'})
+df.Remote_Areas.replace('o',0,inplace=True)
+df.drop('Other_cities',axis=1,inplace=True)
+df.Sex.replace({1:'Male', 2:'Female'," ":np.nan},inplace = True)
+df.BMI.replace({1:'<18.5', 2: '18.5 - 24.9', 3: '25 - 29.9', 4: '30 - 34.9', 5: '35 - 39.9', 6: '>40'},inplace=True)
+df.Riyadh.replace({1:'Riyadh', 0: 'Other Cities', 4: np.nan},inplace=True)
+#BoolColumns = ['Remote_Areas','VTE','PE','DM','CAD','Anemia','Incidence_of_major_bleeding',
+#              'Incidence_of_minor_bleeding','Incidence_of_VTE']
+BoolColumns = ['Remote_Areas','VTE','PE','DM','CAD','Anemia']
+for x in BoolColumns:
+    #df.loc[:, x] = df[x].astype(bool)
+    df.loc[:, x].replace({1: True, 0: False},inplace=True)
+df.Weight.replace({'?':np.nan},inplace=True)
+df.loc[:,'Weight'] = pd.to_numeric(df.Weight)
+df.loc[:,'Height'] = pd.to_numeric(df.Height)
+for x in ['Warfarin_dose_1', 'Warfarin_dose_2', 'Warfarin_dose_3',
+       'Warfarin_dose_4', 'Warfarin_dose_5', 'Warfarin_dose_6',
+       'Warfarin_dose_7', 'Warfarin_dose_8', 'Warfarin_dose_9',
+       'Warfarin_dose_10', 'Warfarin_dose_11', 'Warfarin_dose_12',
+       'Warfarin_dose_13', 'Warfarin_dose_14','Warfarin_Dose']:
+    df.loc[:,x] = [np.array([float (z) for z in y.split(',')]).mean() if ',' in y else float(y) for y in df[x].astype(str)]
+
+dfnoRFT= df.copy()
+df.loc[:,'CKD_Stage'].fillna(1,inplace=True) 
+df['Kidney_Function'] = df.loc[:,'CKD_Stage'].replace([2,3,4,5],'CKD').replace([1], 'NKF') 
+df.CKD_Stage.replace({1:'Stage 1',2:'Stage 2',3:'Stage 3',4:'Stage 4',5:'Stage 5'},inplace=True)
+dfnoRFT = dfnoRFT[~dfnoRFT.loc[:,'CKD_Stage'].isnull()]
+dfnoRFT['Kidney_Function'] = dfnoRFT.loc[:,'CKD_Stage'].replace([2,3,4,5],'CKD').replace([1], 'NKF') 
+dfnoRFT.CKD_Stage.replace({1:'Stage 1',2:'Stage 2',3:'Stage 3',4:'Stage 4',5:'Stage 5'},inplace=True)
