@@ -11,8 +11,9 @@ The final data-set file included three different excel sheets. The first sheet c
 ## Results
 Four tables are produced:
 ### 1. Patients Demographics 
-The data of 209 patients were collected in this study. After the exclusion of the patients with no INR readings, the remaining 198 patients were included in the analysis.Table 1 summaries the demographic data of these patients. In the table, the continuous variables were presented by the their means ± standard deviations (SD). For the categorical variables, the count (percentage) of each category was shown.
+The data of 209 patients were collected in this study. After the exclusion of the patients with no INR readings, the remaining 198 patients were included in the analysis. Table 1 summaries the demographic data of these patients. In the table, the continuous variables were presented by the their means ± standard deviations (SD). For the categorical variables, the count (percentage) of each category was shown.
 ### 2. Baseline Differences between CKD patients and NKF patients 
+NKF and CKD patients were compared using the two-sample T-test for the continuous variables and the Chi-square test for the categorical ones. A p-value of less than 0.01 was considered to be significant.
 ### 3. Outcome Differences between CKD patients and NKF patients 
 ### 4. Linear Regression Model
 The model is about the expected Warfarin dose that is needed to achieve the therapeutic range which can be predicted the   for any patient given his/her age, weight and CKD status by the following equation:
