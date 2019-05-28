@@ -11,6 +11,7 @@ The final data-set file included three different excel sheets. The first sheet c
 ## Results
 Four tables are produced:
 ### 1. Patients Demographics 
+The data of 209 patients were collected in this study. After the exclusion of the patients with no INR readings, the remaining 198 patients were included in the analysis.Table 1 summaries the demographic data of these patients. In the table, the continuous variables were presented by the their means ± standard deviations (SD). For the categorical variables, the count (percentage) of each category was shown.
 ### 2. Baseline Differences between CKD patients and NKF patients 
 ### 3. Outcome Differences between CKD patients and NKF patients 
 ### 4. Linear Regression Model
