@@ -24,5 +24,12 @@ The model is about the expected Warfarin dose that is needed to achieve the ther
 This is based on the data of the patients in the study. I think, however, that the equation will only correctly estimate the needed dose in only 17% of patients. 
 
 
-## Dependencies    
-The data were managed and analysed in Python 3.7.
+## Dependencies
+The data were managed and analysed in Python 3.7 and the followings: 
+* [NumPy](https://www.numpy.org/)
+* [Pandas](https://pandas.pydata.org/)
+* Matplotlib
+* Seaborn
+* Scipy
+* Statsmodels
+* Xlsxwriter
